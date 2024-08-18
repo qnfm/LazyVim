@@ -20,7 +20,7 @@ end
 return {
   {
     "stevearc/conform.nvim",
-    dependencies = { "mason.nvim" },
+    dependencies = { "clangd_extensions.nvim", "mason.nvim" },
     lazy = true,
     cmd = "ConformInfo",
     keys = {
@@ -74,12 +74,24 @@ return {
           lua = { "stylua" },
           fish = { "fish_indent" },
           sh = { "shfmt" },
+          c = { "clang_format" },
+          cpp = { "clang_format" },
+          objc = { "clang_format" },
+          objcpp = { "clang_format" },
+          cuda = { "clang_format" },
+          proto = { "clang-format" },
         },
         -- The options you set here will be merged with the builtin formatters.
         -- You can also define any custom formatters here.
         ---@type table<string, conform.FormatterConfigOverride|fun(bufnr: integer): nil|conform.FormatterConfigOverride>
         formatters = {
           injected = { options = { ignore_errors = true } },
+          clang_format = {
+            prepend_args = { '--style=file', '--fallback-style=LLVM' },
+          },
+          shfmt = {
+            prepend_args = { '-i', '4' },
+          },
           -- # Example of using dprint only when a dprint.json file is present
           -- dprint = {
           --   condition = function(ctx)

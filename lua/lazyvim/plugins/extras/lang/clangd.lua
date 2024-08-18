@@ -25,7 +25,7 @@ return {
     config = function() end,
     opts = {
       inlay_hints = {
-        inline = false,
+        inline = vim.fn.has("nvim-0.10") == 1,
       },
       ast = {
         --These require codicons (https://github.com/microsoft/vscode-codicons)
@@ -79,11 +79,16 @@ return {
           cmd = {
             "clangd",
             "--background-index",
+            "-j=12",
             "--clang-tidy",
+            "--clang-tidy-checks=*",
+            "--all-scopes-completion",
+            "--cross-file-rename",
             "--header-insertion=iwyu",
             "--completion-style=detailed",
             "--function-arg-placeholders",
-            "--fallback-style=llvm",
+            "--fallback-style=WebKit",
+            "--pch-storage=memory",
           },
           init_options = {
             usePlaceholders = true,
